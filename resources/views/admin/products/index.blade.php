@@ -1,5 +1,6 @@
 @extends('admin.layouts.main')
 @section('content')
+
 <div class="product-manager">
     <div class="product-manager-header">
         <div class="product-manager-header-title primary-text-color">
@@ -24,6 +25,7 @@
                 </thead>
                 <tbody>
                     @foreach ($products as $product)
+                    <h1>{{$product['product_id']}}</h1>
                     <tr>
                         <td>{{$product['product_id']}}</td>
                         <td class="image-sm">
@@ -46,3 +48,4 @@
 </div>
 
 @endsection
+

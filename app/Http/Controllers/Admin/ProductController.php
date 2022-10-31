@@ -5,6 +5,7 @@ use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
 use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Brand;
 class ProductController extends Controller
 {
@@ -12,7 +13,6 @@ class ProductController extends Controller
     {
         $limit = $request->limit ?? 10;
         $products = Product::paginate($limit);
-
         return view('admin.products.index', compact('products'));
     }
     public function create()
@@ -111,10 +111,10 @@ class ProductController extends Controller
                 $product->product_description = $request->product_description;
                 $product->product_status = $request->product_status;
                 $product->product_content = $request->product_content;
-                if ($request->product_image) {
+                if ($product->product_image) {
                     Storage::disk('images_products')->delete($product->product_image);
-                    $product->product_image = $request->file('product_image')->store('', 'images_products');
                 }
+                $product->product_image = $request->file('product_image')->store('', 'images_products');
                 if ($request->product_image_slide) {
                     foreach ($request->product_image_slide as $item) {
                         Storage::disk('images_products')->delete($product->product_image);
